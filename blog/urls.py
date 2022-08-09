@@ -25,7 +25,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogapi/', include('blogapi.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name="token"),
-    path('api/refresh_token/', TokenRefreshView.as_view(), name="refresh_token"),
+    path('blogapi/token/', TokenObtainPairView.as_view(), name="token"),
+    path('blogapi/refresh_token/', TokenRefreshView.as_view(), name="refresh_token"),
     path("ckeditor/", include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
