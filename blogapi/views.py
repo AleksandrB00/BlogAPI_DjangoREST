@@ -78,3 +78,29 @@ class ProfileView(generics.GenericAPIView):
         return Response({
             "user_info": UserSerializer(request.user, context=self.get_serializer_context()).data,
         })
+
+class ProfileEditView(generics.GenericAPIView):
+    serializer_class = ProfileEditSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = self.get_serializer(request.user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            'user' : UserSerializer(user, context=self.get_serializer_context()).data,
+            'message' : 'Пользователь успешно изменён',
+        })
+
+class PostCreateView(generics.GenericAPIView):
+    serializer_class = PostCreateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        post = serializer.save()
+        return Response({
+            'post' : PostSerializer(post, context=self.get_serializer_context()).data,
+            'message' : 'Пост успешно создан',
+        })

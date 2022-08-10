@@ -67,3 +67,40 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
+class ProfileEditSerializer(serializers.ModelSerializer):
+
+    confirm_password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
+        extra_kwargs = {
+            'password' : {'write_only' : True}
+        }
+
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.password = validated_data.get('password', instance.password)
+        confirm_password = validated_data['confirm_password']
+        if  instance.password != confirm_password:
+            raise serializers.ValidationError({
+                'password' : 'Пароли не совпадают'
+            })
+        instance.save()
+        return instance
+
+class PostCreateSerializer(serializers.ModelSerializer):
+
+    tag = TagListSerializerField()
+    author = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+
+    class Meta:
+        model = Post
+        fields = ['id', 'h1', 'text', 'author', 'post_date','image', 'slug', 'tag']
+
+    

@@ -13,4 +13,6 @@ urlpatterns = [
     path('feedback/', FeedBackView.as_view()),
     path('signup/', SignUpView.as_view()),
     path('profile_view/', ProfileView.as_view()),
+    path('profile_edit/', ProfileEditView.as_view()),
+    path('create_post/', PostCreateView.as_view()),
 ]
