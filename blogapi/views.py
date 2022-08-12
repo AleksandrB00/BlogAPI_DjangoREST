@@ -38,7 +38,7 @@ class TagView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 class AsideView(generics.ListAPIView):
-    queryset = Post.objects.order_by('-id')[:5]
+    queryset = Post.objects.order_by('-id')[:3]
     serializer_class = PostSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -104,3 +104,18 @@ class PostCreateView(generics.GenericAPIView):
             'post' : PostSerializer(post, context=self.get_serializer_context()).data,
             'message' : 'Пост успешно создан',
         })
+
+class CommentView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        slug = self.kwargs['post_slug'].lower()
+        post = Post.objects.get(slug=slug)
+        return Comment.objects.filter(post=post)
+
+class AddCommentView(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
