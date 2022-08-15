@@ -91,6 +91,7 @@ class ProfileEditSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'password' : 'Пароли не совпадают'
             })
+        instance.set_password(validated_data['password'])
         instance.save()
         return instance
 
