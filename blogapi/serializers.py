@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     tag = TagListSerializerField()
-    author = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+    author = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
     
     class Meta:
         model = Post
@@ -98,7 +98,7 @@ class ProfileEditSerializer(serializers.ModelSerializer):
 class PostCreateSerializer(serializers.ModelSerializer):
 
     tag = TagListSerializerField()
-    author = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+    author = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
 
     class Meta:
         model = Post
@@ -106,12 +106,12 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
 
-    username = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
-    post = serializers.SlugRelatedField(slug_field="slug", queryset=Post.objects.all())
+    username = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    post = serializers.SlugRelatedField(slug_field='slug', queryset=Post.objects.all())
 
     class Meta:
         model = Comment
-        fields = ("id", "post", "username", "text", "created_date")
+        fields = ('id', 'post', 'username', 'text', 'created_date')
         lookup_field = 'id'
         extra_kwargs = {
             'url': {'lookup_field': 'id'}

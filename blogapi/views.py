@@ -46,7 +46,7 @@ class FeedBackView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ContactSerailizer
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer_class = ContactSerailizer(data=request.data)
         if serializer_class.is_valid():
             data = serializer_class.validated_data
@@ -55,7 +55,7 @@ class FeedBackView(APIView):
             subject = data.get('subject')
             message = data.get('message')
             send_mail(f'От {name} | {subject}', message, from_email, ['your_mail'])
-            return Response({"success": "Sent"})
+            return Response({'success': 'Sent'})
 
 class SignUpView(generics.GenericAPIView):
     serializer_class = SignUpSerializer
@@ -76,7 +76,7 @@ class ProfileView(generics.GenericAPIView):
 
     def get(self, request):
         return Response({
-            "user_info": UserSerializer(request.user, context=self.get_serializer_context()).data,
+            'user_info': UserSerializer(request.user, context=self.get_serializer_context()).data,
         })
 
 class ProfileEditView(generics.GenericAPIView):

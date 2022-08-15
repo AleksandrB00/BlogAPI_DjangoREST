@@ -15,6 +15,6 @@ urlpatterns = [
     path('profile_view/', ProfileView.as_view()),
     path('profile_edit/', ProfileEditView.as_view()),
     path('create_post/', PostCreateView.as_view()),
-    path("comments/", CommentView.as_view()),
-    path("comments/<slug:post_slug>/", CommentView.as_view()),
+    path('comments/', CommentView.as_view()),
+    path('comments/<slug:post_slug>/', CommentView.as_view()),
 ]
