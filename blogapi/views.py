@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 
 class PaginationView(pagination.PageNumberPagination):
     page_size = 3
-    page_query_param = 'page_size'
+    page_query_param = 'page'
     ordering = 'post_date'
 
 class PostViewSet(viewsets.ModelViewSet):
